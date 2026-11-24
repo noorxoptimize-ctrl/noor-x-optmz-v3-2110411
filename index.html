@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090303">
+<title>Noor | Buyers</title>
+<style>
+:root{--red:#ff171f;--bg:#080303;--panel:#191919;--muted:#aaa}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% 45%,#300707 0%,#120303 48%,#050202 100%);color:#f5f5f5;font-family:Arial,Helvetica,sans-serif}
+button,input{font:inherit}
+.screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px 16px}
+.login-card{width:min(100%,440px);background:#1a1a1a;border:1px solid #641015;border-radius:27px;padding:32px 24px;box-shadow:0 0 28px #ff10151b}
+.logo{width:76px;height:76px;margin:0 auto 24px;border-radius:50%;display:grid;place-items:center;background:#f20d17;color:#090303;font-weight:900;font-size:25px;box-shadow:0 0 24px #ff10158a}
+h1{margin:0;text-align:center;color:#ff3038;font-size:29px}
+.sub{text-align:center;color:#aaa;margin:12px 0 28px;font-size:15px}
+.field{display:flex;align-items:center;gap:12px;background:#050505;border:1px solid #701017;box-shadow:0 0 10px #ff10151b;border-radius:15px;padding:0 15px;margin:15px 0}
+.field span{color:#f21b25;font-size:19px}
+.field input{width:100%;min-width:0;background:transparent;border:0;outline:0;color:white;padding:17px 0;font-size:16px}
+.primary{width:100%;border:0;border-radius:12px;padding:16px;background:linear-gradient(90deg,#f10d18,#b90009);color:white;font-weight:800;letter-spacing:.5px;box-shadow:0 5px 18px #f10d1838;cursor:pointer;margin-top:12px}
+.primary:active{transform:scale(.99)}
+.error{min-height:18px;text-align:center;color:#ff6268;font-size:13px;margin-top:12px}
+.hidden{display:none!important}
+.dashboard{width:min(100%,760px);margin:0 auto;padding:0 16px 40px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 -16px 0;padding:24px 18px;background:#191919;border-bottom:1px solid #451014;min-height:112px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:900;letter-spacing:1px}
+.brand .mini{width:42px;height:42px;border-radius:50%;background:#f10d18;color:#090303;display:grid;place-items:center;font-weight:900;box-shadow:0 0 15px #f10d1866}
+.logout{border:1px solid #641015;color:#ff5960;background:#160606;border-radius:10px;padding:10px 13px;cursor:pointer}
+.welcome{background:linear-gradient(135deg,#210303,#090303 75%);border:1px solid #4b1115;border-radius:20px;padding:25px 22px;margin:0 0 28px}
+.welcome small{color:#aaa}.welcome h2{margin:8px 0;color:#ff343d;font-size:25px}.welcome p{margin:0;color:#aaa}
+.stats{display:grid;grid-template-columns:1fr;gap:18px;margin-bottom:26px}
+.stat{position:relative;overflow:hidden;background:linear-gradient(145deg,#191919,#050505 80%);border:1px solid #3d1719;border-radius:20px;padding:25px 22px;min-height:178px;box-shadow:0 8px 24px #0008}.stat:before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,#ff101b,#4b080b)}
+.stat b{display:block;color:#fff;font-size:clamp(38px,9vw,58px);margin:28px 0 12px}.stat span{font-size:15px;color:#d0d0d0;letter-spacing:.5px}.stat .stat-label{font-size:17px;font-weight:800;color:#ddd;letter-spacing:1px}.stat .stat-foot{font-size:14px;color:#bbb}
+.section-title{font-size:21px;margin:26px 0 14px}
+.pack{background:linear-gradient(145deg,#191919,#070707);border:1px solid #711219;border-radius:18px;padding:21px}
+.pack-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.pack h3{margin:0;color:#ff343d;font-size:19px}.tag{font-size:11px;color:#ff777d;border:1px solid #792027;border-radius:20px;padding:6px 9px}
+.pack p{color:#aaa;font-size:14px;line-height:1.5}
+.download{display:block;text-align:center;text-decoration:none;background:linear-gradient(90deg,#f10d18,#b90009);color:#fff;font-weight:900;letter-spacing:.5px;border-radius:11px;padding:17px;margin-top:18px;box-shadow:0 5px 18px #f10d1838}
+.note{color:#777;font-size:12px;line-height:1.5;margin-top:22px;text-align:center}
+.nav{display:flex;gap:9px;margin:16px 0 20px}
+.nav button{flex:1;padding:12px 8px;border:1px solid #4b171a;background:#160707;color:#bbb;border-radius:11px}
+.nav button.active{background:#7e0a10;color:#fff;border-color:#f21b25}
+.profile{background:#191919;border:1px solid #4b171a;border-radius:16px;padding:18px;color:#bbb;line-height:1.8}
+@media(max-width:380px){.login-card{padding:27px 18px}.stats{gap:8px}.stat{padding:14px}}
+
+.success-screen{position:fixed;top:18px;left:16px;right:16px;z-index:20;max-width:620px;margin:0 auto;background:#191919;border:1px solid #641015;border-radius:17px;overflow:hidden;box-shadow:0 12px 35px #000b;animation:successPop .35s ease-out}
+.success-message{display:flex;align-items:center;gap:14px;padding:20px 18px}
+.success-check{flex:0 0 40px;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:#126b35;color:#8dffae;font-size:25px;font-weight:900}
+.success-copy{min-width:0;flex:1}
+.success-copy strong{display:block;color:#fff;font-size:18px;margin-bottom:6px}
+.success-copy p{margin:0;color:#bbb;font-size:15px;line-height:1.35}
+.success-copy b{color:#ff3038}
+.success-progress{height:5px;background:#3b080c}
+.success-progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,#ff171f,#ff6066);animation:successLoad 1.4s linear forwards}
+@keyframes successPop{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes successLoad{to{width:100%}}
+
+</style>
+</head>
+<body>
+<section id="loginScreen" class="screen">
+  <div class="login-card">
+    <div class="logo">KX</div>
+    <h1>Welcome Back</h1>
+    <div class="sub">Login to access your configurations</div>
+    <form id="loginForm">
+      <label class="field"><span>♟</span><input id="username" autocomplete="username" placeholder="Username" required></label>
+      <label class="field"><span>🔒</span><input id="password" type="password" autocomplete="current-password" placeholder="Password" required></label>
+      <button class="primary" type="submit">LOGIN</button>
+      <div id="error" class="error"></div>
+    </form>
+  </div>
+</section>
+
+<section id="successScreen" class="success-screen hidden" aria-live="polite"><div class="success-message"><div class="success-check">✓</div><div class="success-copy"><strong>Login Successful!</strong><p>Welcome back, <b>Noor</b>! Redirecting to dashboard...</p></div></div><div class="success-progress"><span></span></div></section>
+
+<main id="homeScreen" class="dashboard hidden">
+  <header class="top">
+    <div style="display:flex;align-items:center;gap:16px;min-width:0">
+      <span style="font-size:30px;color:#fff">☰</span>
+      <div>
+        <div style="font-size:30px;font-weight:800;line-height:1.1">Dashboard</div>
+        <div style="font-size:16px;color:#d0d0d0;margin-top:8px">Welcome back to your control panel</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="mini" style="width:54px;height:54px;font-size:23px">●</div>
+      <button class="logout" id="logout">⌄</button>
+    </div>
+  </header>
+
+  <section class="welcome">
+    <h2 style="color:#fff;font-size:25px;line-height:1.25">Welcome back, <span style="color:#f01822">Noor!</span></h2>
+    <p style="font-size:17px;color:#eee;line-height:1.45">Ready to optimize your FreeFire gameplay? Check out your latest configurations below.</p>
+  </section>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-label">TOTAL USERS <span style="float:right;color:#b20c15;font-size:25px">♟</span></div>
+      <b>127</b>
+      <div class="stat-foot">▰ &nbsp; Active community members</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">YOUR STATUS <span style="float:right;color:#b20c15;font-size:25px">♟✓</span></div>
+      <b>Active</b>
+      <div class="stat-foot">● &nbsp; Account is active and ready</div>
+    </div>
+  </div>
+
+
+  <section id="packsTab">
+    <div class="section-title">Your Download</div>
+    <article class="pack">
+      <div class="pack-head"><h3>Noor OPTIMIZE PACK</h3><span class="tag">ACTIVE</span></div>
+      <p>Your purchased optimization pack is ready. Tap below to open the download page.</p>
+      <a class="download" id="downloadBtn" href="https://www.mediafire.com/file/lk8obljrgposlc4/%25F0%259D%2590%258A%25F0%259D%2590%2580%25F0%259D%2590%2588%25F0%259D%2590%2599%25F0%259D%2590%2584%25F0%259D%2590%258D_%25F0%259D%2590%258E%25F0%259D%2590%258F%25F0%259D%2593%2593%25F0%259D%2590%258C%25F0%259D%2590%2599_%2528V3%2529_%25F0%259F%259A%2580/file" target="_blank" rel="noopener">DOWNLOAD PACK</a>
+    </article>
+  </section>
+  <div class="note">Noor • BUYERS DOWNLOAD PANEL</div>
+</main>
+<script>
+// DEMO ONLY: credentials are visible in this page's source. Use a server-side
+// authentication system before publishing this panel for real customer accounts.
+const DEMO_USER = "NOORBUYOZ";
+const DEMO_PASS = "VIPACCESSV3";
+// Add the direct ZIP/APK URL below when your pack is ready.
+const PACK_DOWNLOAD_URL = "";
+
+const loginScreen=document.getElementById("loginScreen");
+const homeScreen=document.getElementById("homeScreen");
+document.getElementById("loginForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const u=document.getElementById("username").value.trim();
+  const p=document.getElementById("password").value;
+  if(u===DEMO_USER && p===DEMO_PASS){
+    loginScreen.classList.add("hidden");
+    const successScreen=document.getElementById("successScreen");
+    successScreen.classList.remove("hidden");
+    document.getElementById("error").textContent="";
+    window.setTimeout(()=>{
+      successScreen.classList.add("hidden");
+      homeScreen.classList.remove("hidden");
+    },1400);
+  }else{
+    document.getElementById("error").textContent="Incorrect username or password";
+  }
+});
+document.getElementById("logout").addEventListener("click",()=>{
+  homeScreen.classList.add("hidden");loginScreen.classList.remove("hidden");
+  document.getElementById("password").value="";
+});
+
+</script>
+</body>
+</html>
